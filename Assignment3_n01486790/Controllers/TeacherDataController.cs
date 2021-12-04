@@ -38,6 +38,16 @@ namespace Assignment3_n01486790.Controllers
 
             //SQL QUERY
 
+            //To show work I spent a good chunk of time trying to figure out but didn't end up using: below is a modified query I was using to try and format the hiredate column through SQL.
+            //At the time I was trying to keep HireDate in the Teacher model set to a DateTime and that seemed to cause difficulty when I was trying to use DATE_FORMAT(), but not DATE()
+            //Eventually I decided to set the HireDate back to a string and used the method you'll see below (which no longer required breaking up the SELECT *).
+            //I'm also assuming that using DATE_FORMAT() would have worked if HireDate was kept as a string.  
+
+            //Experimental Query:
+            //cmd.CommandText = "Select teacherid, teacherfname, teacherlname, employeenumber, DATE(hiredate) as hiredate, salary from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) " + // Broke up select all to add DATE() to hiredate
+            //                  "or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key) " + //Query accounts for first name, last name or both being searched. 
+            //                  "order by teacherlname"; //Arranges the teacher list alphabetically
+
             cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) " +
                               "or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key) " + //Query accounts for first name, last name or both being searched. 
                               "order by teacherlname"; //Arranges the teacher list alphabetically
@@ -50,7 +60,7 @@ namespace Assignment3_n01486790.Controllers
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Create an empty list of Teachers
-            List<Teacher> Teachers = new List<Teacher> { };
+            List<Teacher> Teachers = new List<Teacher>{}; 
 
             //Loop Through Each Row of the Result Set
             while (ResultSet.Read())
@@ -61,8 +71,12 @@ namespace Assignment3_n01486790.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                string HireDate = ResultSet["hiredate"].ToString();
-                HireDate = HireDate.Substring(0, 10); //Removes the unnecessary time information from the hiredate SQL data. 
+
+                DateTime HireDateData = (DateTime)ResultSet["hiredate"];
+                string HireDate = HireDateData.ToString("dd/MM/yyyy"); //Let me know if this was the right way to handle this.
+                                                                       //I spent alot of time trying to get it working while keeping the HireData in the Teacher model as a DataTime,
+                                                                       //but couldn't figure out a method to remove the unneeded timestame.
+
                 decimal Salary = Convert.ToDecimal(ResultSet["salary"]);
                 
 
@@ -87,8 +101,6 @@ namespace Assignment3_n01486790.Controllers
             return Teachers;
 
         }
-
-
 
         /// <summary>
         /// Returns a single teacher from the database by providing their primary key, teacherid
@@ -126,10 +138,11 @@ namespace Assignment3_n01486790.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                string HireDate = ResultSet["hiredate"].ToString();
-                HireDate = HireDate.Substring(0, 10); //Removes the unnecessary time information from the hiredate SQL data. 
+
+                DateTime HireDateData = (DateTime)ResultSet["hiredate"];
+                string HireDate = HireDateData.ToString("dd/MM/yyyy"); 
+
                 decimal Salary = Convert.ToDecimal(ResultSet["salary"]);
-                
                 SelectedTeacher.TeacherId = TeacherId;
                 SelectedTeacher.TeacherFname = TeacherFname;
                 SelectedTeacher.TeacherLname = TeacherLname;
@@ -147,7 +160,69 @@ namespace Assignment3_n01486790.Controllers
 
         }
 
+        /// <summary>
+        /// Adds a new teacher into the system
+        /// </summary>
+        /// <param name="NewTeacher">Teacher Object</param>
+        public void AddTeacher(Teacher NewTeacher)
+        {
 
-        
+            //Create an instance of a conneciton
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and the database
+            Conn.Open();
+
+            string query = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@firstname,@lastname,@employeenumber,@hiredate,@salary)";
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@firstname", NewTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@lastname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@employeenumber", "T"+NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@hiredate", NewTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@salary", NewTeacher.Salary);
+
+
+            //DML Operations
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
+        }
+
+        /// <summary>
+        /// Deletes a teacher from the database through it's primary key
+        /// </summary>
+        /// <param name="id">The primamry key of the teacher</param>
+        public void DeleteTeacher(int id) 
+        {
+
+            //Create an instance of a conneciton
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and the database
+            Conn.Open();
+
+            string query = "delete from teachers where teacherid=@id";
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@id", id);
+
+            //DML Operations
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
+        }
+
     }
 }

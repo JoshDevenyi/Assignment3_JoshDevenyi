@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<Assignment3_n01486790.Models.Teacher>
+﻿@model IEnumerable<Assignment3_n01486790.Models.Teacher>
 
 @{
     ViewBag.Title = "List";
@@ -11,6 +10,12 @@
     <input type="text" name="SearchKey" autocomplete="off"/>
     <input type="submit" value="Search"/>
 </form>
+
+<div>
+    
+    <a href="/Teacher/New" class="add-link">Add a new Teacher</a>
+
+</div>
 
 <div class ="info-box">
     @foreach (var Teacher in Model)

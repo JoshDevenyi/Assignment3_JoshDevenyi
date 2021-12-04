@@ -59,8 +59,8 @@ namespace Assignment3_n01486790.Controllers
                 string StudentFname = ResultSet["studentfname"].ToString();
                 string StudentLname = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();
-                string EnrolDate = ResultSet["enroldate"].ToString();
-                EnrolDate = EnrolDate.Substring(0, 10); //Removes the unnecessary time information from the enroldate SQL data.
+                DateTime EnrolDateData = (DateTime)ResultSet["enroldate"];
+                string EnrolDate = EnrolDateData.ToString("dd/MM/yyyy");
 
                 Student NewStudent = new Student();
                 NewStudent.StudentId = StudentId;
@@ -118,8 +118,8 @@ namespace Assignment3_n01486790.Controllers
                 string StudentFname = ResultSet["studentfname"].ToString();
                 string StudentLname = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();
-                string EnrolDate = ResultSet["enroldate"].ToString();
-                EnrolDate = EnrolDate.Substring(0, 10); //Removes the unnecessary time information from the enroldate SQL data.
+                DateTime EnrolDateData = (DateTime)ResultSet["enroldate"];
+                string EnrolDate = EnrolDateData.ToString("dd/MM/yyyy");
 
                 SelectedStudent.StudentId = StudentId;
                 SelectedStudent.StudentFname = StudentFname;

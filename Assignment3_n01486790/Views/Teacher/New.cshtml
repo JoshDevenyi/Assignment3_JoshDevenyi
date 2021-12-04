@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "New";
+}
+
+<script src="~/Scripts/teacher-form-validation.js"></script>
+
+<h2>New Teacher</h2>
+<a href="/Teacher/List">Back to List</a>
+
+
+<form method="POST" action="/Teacher/Create" name="AddTeacherForm">
+
+    <div class="add-pair">
+        <label>First Name:</label>
+        <input type="text" name="TeacherFname" id="TeacherFname" />
+    </div>
+
+    <div class="add-pair">
+        <label>Last Name:</label>
+        <input type="text" name="TeacherLname" id="TeacherLname" />
+    </div>
+
+    <div class="add-pair">
+        <label>Employee Number:</label>
+        <input type="number" name="EmployeeNumber" id="EmployeeNumber" min="100" />
+    </div>
+
+    <div class="add-pair">
+        <label>Date Hired:</label>
+        <input type="date" name="HireDate" id="HireDate" min="100" />
+    </div>
+
+    <div class="add-pair">
+        <label>Salary:</label>
+        <input type="number" name="Salary" id="Salary" step='0.01' min="0" />
+    </div>
+
+    <input type="submit" value="Add Teacher" class="submit-btn">
+
+</form>

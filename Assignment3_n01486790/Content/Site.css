@@ -68,3 +68,61 @@ textarea {
     margin: 1.5em 0;
 
 }
+
+
+/* Adjustments to Teacher Adding */
+
+.add-link {
+
+    color: #409712;
+
+}
+
+.add-pair input, .add-pair label {
+    display: block;
+}
+
+.add-pair {
+
+    margin-top: 1.5em;
+
+}
+
+.submit-btn {
+
+    margin-top: 1.5em;
+
+}
+
+
+/* Adjustments to Teacher Deletion */
+
+.delete-link {
+
+    color: #c41515;
+    float:right;
+
+}
+
+.warning{
+
+    text-align:center;
+
+}
+
+.delete-btn {
+    background-color: #a72525;
+    margin: 1em;
+    padding: 10px;
+    color:white;
+    border:none;
+    font-size:1.5em;
+    border-radius: 15px;
+}
+
+.return-link {
+    padding-top: 1em;
+}
+
+
+

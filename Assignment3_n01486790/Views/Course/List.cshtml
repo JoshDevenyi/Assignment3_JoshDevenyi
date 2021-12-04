@@ -1,11 +1,11 @@
 ﻿
-@model IEnumerable<Assignment3_n01486790.Models.Class>
+@model IEnumerable<Assignment3_n01486790.Models.Course>
 
 @{
     ViewBag.Title = "List";
 }
 
-<h2>List of Classes</h2>
+<h2>List of Courses</h2>
 
 <form class="search-bar">
     <input type="text" name="SearchKey" autocomplete="off" />
@@ -13,9 +13,9 @@
 </form>
 
 <div class ="info-box">
-    @foreach (var Class in Model)
+    @foreach (var Course in Model)
     {
-        <p><a href="/Class/Show/@Class.ClassId">@Class.ClassCode: @Class.ClassName</a></p>
+        <p><a href="/Course/Show/@Course.CourseId">@Course.CourseCode: @Course.CourseName</a></p>
     } 
 </div>
 
