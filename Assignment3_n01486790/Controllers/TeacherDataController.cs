@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Assignment3_n01486790.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace Assignment3_n01486790.Controllers
 {
@@ -73,7 +74,7 @@ namespace Assignment3_n01486790.Controllers
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
 
                 DateTime HireDateData = (DateTime)ResultSet["hiredate"];
-                string HireDate = HireDateData.ToString("dd/MM/yyyy"); //Let me know if this was the right way to handle this.
+                string HireDate = HireDateData.ToString("yyyy/MM/dd"); //Let me know if this was the right way to handle this.
                                                                        //I spent alot of time trying to get it working while keeping the HireData in the Teacher model as a DataTime,
                                                                        //but couldn't figure out a method to remove the unneeded timestame.
 
@@ -140,7 +141,7 @@ namespace Assignment3_n01486790.Controllers
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
 
                 DateTime HireDateData = (DateTime)ResultSet["hiredate"];
-                string HireDate = HireDateData.ToString("dd/MM/yyyy"); 
+                string HireDate = HireDateData.ToString("yyyy/MM/dd"); 
 
                 decimal Salary = Convert.ToDecimal(ResultSet["salary"]);
                 SelectedTeacher.TeacherId = TeacherId;
@@ -194,10 +195,45 @@ namespace Assignment3_n01486790.Controllers
 
         }
 
+
+        /// <summary>
+        /// Updates a Teacher on the MySQL database when provided teacher information (including the Teacher ID)
+        /// </summary>
+        /// <param name="SelectedTeacher">Teacher Information, includes the teacher's first and last names, employee number, hire date and salary</param>
+        /// <returns>Nothing</returns>
+        public void UpdateTeacher(Teacher SelectedTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the webserver and the daatabase
+            Conn.Open();
+
+            string query = "update teachers set teacherfname = @firstname, teacherlname = @lastname, employeenumber = @employeenumber, hiredate = @hiredate, salary = @salary where teacherid = @id";
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = query;
+            cmd.Parameters.AddWithValue("@id", SelectedTeacher.TeacherId);
+            cmd.Parameters.AddWithValue("@firstname", SelectedTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@lastname", SelectedTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@employeenumber", "T" + SelectedTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@hiredate", SelectedTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@salary", SelectedTeacher.Salary);
+
+            //DML Operations
+            cmd.ExecuteNonQuery();
+
+            //Close the connection between the MySQL Database and the WebServer
+            Conn.Close();
+
+        }
+
         /// <summary>
         /// Deletes a teacher from the database through it's primary key
         /// </summary>
-        /// <param name="id">The primamry key of the teacher</param>
+        /// <param name="id">The primary key of the teacher</param>
         public void DeleteTeacher(int id) 
         {
 

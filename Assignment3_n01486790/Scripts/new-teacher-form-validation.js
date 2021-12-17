@@ -10,12 +10,6 @@ window.onload = function() {
         var ENumber = formHandle.EmployeeNumber;
         var HDate = formHandle.HireDate;
         var Income = formHandle.Salary;
-        
-        console.log(FName.value);
-        console.log(LName.value);
-        console.log(ENumber.value);
-        console.log(HDate.value);
-        console.log(Income.value);
 
 
         if (FName.value === "" || FName.value === null) {

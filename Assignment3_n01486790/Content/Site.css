@@ -18,9 +18,6 @@ textarea {
 }
 
 
-
-
-
 /* Changes color of navigation bar */
 .navbar {
     background-color: #040321;
@@ -65,8 +62,12 @@ textarea {
 
 .info-box {
 
-    margin: 1.5em 0;
+    margin: 1.75em 0;
 
+}
+
+.list-box {
+    margin: 1.5em 0;
 }
 
 
@@ -125,4 +126,12 @@ textarea {
 }
 
 
+/* Adjustments to Teacher Updating */
 
+#update-link {
+    color: #e342de;
+}
+
+.update-pair {
+    margin-top: 1.5em;
+}

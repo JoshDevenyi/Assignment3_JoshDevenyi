@@ -1,0 +1,48 @@
+﻿@model Assignment3_n01486790.Models.Teacher
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<script src="~/Scripts/update-teacher-form-validation.js"></script>
+
+<h2>Update Teacher</h2>
+<a href="/Teacher/Show/@Model.TeacherId">Back to @Model.TeacherFname @Model.TeacherLname</a>
+
+
+<form method="POST" action="/Teacher/Update/@Model.TeacherId" name="UpdateTeacherForm">
+
+    <div class="update-pair">
+        <label>First Name:</label>
+        <div><input type="text" name="TeacherFname" id="TeacherFname" value="@Model.TeacherFname" /></div>
+    </div>
+
+
+    <div class="update-pair">
+        <label>Last Name:</label>
+        <div><input type="text" name="TeacherLname" id="TeacherLname" value="@Model.TeacherLname" /></div>
+    </div>
+
+
+    <div class="update-pair">
+        <label>Employee Number:</label>
+        <div><input type="number" name="EmployeeNumber" id="EmployeeNumber" value="@Model.EmployeeNumber.Substring(1,(@Model.EmployeeNumber.Length-1))" /></div><!--Isolating the number value of the Employee Number (No T)-->
+    </div>
+
+
+    <div class="update-pair">
+        <label>Date Hired:</label>
+        <div><input type="date" name="HireDate" id="HireDate" value="@Model.HireDate" /></div>
+    </div>
+
+
+    <div class="update-pair">
+        <label>Salary:</label>
+        <div><input type="number" name="Salary" id="Salary" step='0.01' min="0" value="@Model.Salary" /></div>
+    </div>
+
+    <div class="update-pair">
+        <input type="submit" value="Update Teacher" />
+    </div>
+
+</form>

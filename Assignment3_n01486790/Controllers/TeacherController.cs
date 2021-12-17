@@ -31,6 +31,45 @@ namespace Assignment3_n01486790.Controllers
             return View(SelectedTeacher);
         }
 
+
+        //This request will render a page with an update form given a Teacher's ID
+        // GET: /Teacher/Update/{id}
+        [HttpGet]
+        [Route("Teacher/Update/{id}")]
+        public ActionResult Update(int id)
+        {
+      
+            TeacherDataController Controller = new TeacherDataController();
+            Teacher SelectedTeacher = Controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+
+        }
+
+
+        //This request will actually update a teacher's information
+        // POST: /Teacher/Update/{id}
+        [HttpPost]
+        [Route("Teacher/Update/{id}")]
+        public ActionResult Update(int id, string TeacherFname, string TeacherLname, string EmployeeNumber,  string HireDate, decimal salary)
+        {
+
+            TeacherDataController Controller = new TeacherDataController();
+
+            Teacher SelectedTeacher = new Teacher();
+            SelectedTeacher.TeacherId = id;
+            SelectedTeacher.TeacherFname = TeacherFname;
+            SelectedTeacher.TeacherLname = TeacherLname;
+            SelectedTeacher.EmployeeNumber = EmployeeNumber;
+            SelectedTeacher.HireDate = HireDate;
+            SelectedTeacher.Salary = salary;
+
+            Controller.UpdateTeacher(SelectedTeacher);
+
+            return RedirectToAction("Show/" + id);
+        }
+
+
         // GET: /Teacher/New
         [HttpGet]
         [Route("Teacher/New")]
@@ -46,8 +85,6 @@ namespace Assignment3_n01486790.Controllers
         [Route("Teacher/Create")]
         public ActionResult Create(string TeacherFname, string TeacherLname, string EmployeeNumber, string HireDate, decimal salary)
         {
-
-            //I want to add a new teacher 
 
             TeacherDataController Controller = new TeacherDataController();
 

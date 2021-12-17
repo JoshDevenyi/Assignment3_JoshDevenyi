@@ -12,7 +12,7 @@
     <input type="submit" value="Search"/>
 </form>
 
-<div class ="info-box">
+<div class ="list-box">
     @foreach (var Student in Model)
     {
         <p><a href="/Student/Show/@Student.StudentId">@Student.StudentFname @Student.StudentLname</a></p>;

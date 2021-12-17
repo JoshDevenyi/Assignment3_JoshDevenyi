@@ -244,7 +244,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\teacher-form-validation.js" />
+    <Content Include="Scripts\update-teacher-form-validation.js" />
+    <Content Include="Scripts\new-teacher-form-validation.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -273,6 +274,7 @@
     <Content Include="Views\Course\Show.cshtml" />
     <Content Include="Views\Teacher\New.cshtml" />
     <Content Include="Views\Teacher\DeleteConfirm.cshtml" />
+    <Content Include="Views\Teacher\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
